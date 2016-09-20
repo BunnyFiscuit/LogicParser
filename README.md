@@ -11,8 +11,9 @@ You need have installed GHCi
 The only function working at the moment is showExpr.
 
 There are two atoms already defined in LogicInterp.hs, namely p and q.
-      - p = EVar (Ident "p")
-      - q = EVar (Ident "q")
+- p = EVar (Ident "p")
+- q = EVar (Ident "q")
+
 You can use these right off the bat, but if you want to use more variables,
 you'll have to write them out manually, like above.
 
