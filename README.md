@@ -4,13 +4,12 @@ A parser for propositional and possibly predicate logic in haskell.
 # Requirements
 You need have installed GHCi
 
-# Instruction
+# Instructions
 - Start GHCi on your terminal.
 - Load LogicInterp.hs
 
 The only function working at the moment is showExpr.
 
-# How to use
 There are two atoms already defined in LogicInterp.hs, namely p and q.
       - p = EVar (Ident "p")
       - q = EVar (Ident "q")
