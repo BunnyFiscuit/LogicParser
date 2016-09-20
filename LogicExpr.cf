@@ -1,0 +1,8 @@
+EImp.		Expr  ::= Expr "->" Expr;
+EAnd.		Expr1 ::= Expr "&"  Expr;
+EOr.		Expr1 ::= Expr "|"  Expr;
+ENot.		Expr2 ::= "!" Expr;
+ELitTrue.	Expr3 ::= "true";
+ELitFalse.	Expr3 ::= "false";
+EVar.		Expr3 ::= Ident ;
+coercions Expr 3;

@@ -1,0 +1,17 @@
+module LogicExpr where
+
+data Expr
+  = Lit Bool
+  | And Expr Expr
+  | Or  Expr Expr
+  | Imp Expr Expr
+  | Not Expr
+  | Var Name
+  deriving (Eq, Show)
+
+type Name = String
+
+------
+showExpr :: Expr -> String
+showExpr (Lit b) = show b
+

@@ -1,0 +1,11 @@
+all:
+	happy -gca ParLogicExpr.y
+	alex -g LexLogicExpr.x
+	latex DocLogicExpr.tex; dvips DocLogicExpr.dvi -o DocLogicExpr.ps
+	ghc --make TestLogicExpr.hs -o TestLogicExpr
+clean:
+	-rm -f *.log *.aux *.hi *.o *.dvi
+	-rm -f DocLogicExpr.ps
+distclean: clean
+	-rm -f DocLogicExpr.* LexLogicExpr.* ParLogicExpr.* LayoutLogicExpr.* SkelLogicExpr.* PrintLogicExpr.* TestLogicExpr.* AbsLogicExpr.* TestLogicExpr ErrM.* SharedString.* LogicExpr.dtd XMLLogicExpr.* Makefile*
+
