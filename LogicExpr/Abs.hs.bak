@@ -15,7 +15,6 @@ data Expr =
   deriving (Eq,Ord,Show)
 
 data Stmt =
-   SExpr Expr
- | SAssign Ident Expr
+   SAssign Ident Expr
   deriving (Eq,Ord,Show)
 

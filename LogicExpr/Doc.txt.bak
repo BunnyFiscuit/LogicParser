@@ -49,7 +49,6 @@ All other symbols are terminals.
   |  |  **|**  | ``false`` 
   |  |  **|**  | //Ident// 
   |  |  **|**  | ``(`` //Expr// ``)`` 
-  | //Stmt// | -> | //Expr// 
-  |  |  **|**  | //Ident// ``=`` //Expr// 
+  | //Stmt// | -> | //Ident// ``=`` //Expr// 
 
 

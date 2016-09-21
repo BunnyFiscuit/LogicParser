@@ -61,8 +61,7 @@ Expr3 : 'true' { ELitTrue }
 
 
 Stmt :: { Stmt }
-Stmt : Expr { SExpr $1 } 
-  | Ident '=' Expr { SAssign $1 $3 }
+Stmt : Ident '=' Expr { SAssign $1 $3 } 
 
 
 

@@ -6,3 +6,6 @@ ELitTrue.	Expr3 ::= "true";
 ELitFalse.	Expr3 ::= "false";
 EVar.		Expr3 ::= Ident ;
 coercions Expr 3;
+
+SExpr.   Stmt ::= Expr ; 
+SAssign. Stmt ::= Ident "=" Expr ; 

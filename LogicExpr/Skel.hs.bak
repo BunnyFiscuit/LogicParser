@@ -27,7 +27,6 @@ transExpr x = case x of
 
 transStmt :: Stmt -> Result
 transStmt x = case x of
-  SExpr expr  -> failure x
   SAssign id expr  -> failure x
 
 
