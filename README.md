@@ -19,3 +19,17 @@ you'll have to write them out manually, like above.
 
 After loading the LogicInterp.hs file in GHCi, try this:
 - (EAnd (ENot p) q)
+
+# UPDATE:
+Functions:
+- asValue :: Map.Map Ident Bool -> Expr -> Bool -> Map.Map Ident Bool
+- sEval :: Map.Map Ident Bool -> Expr -> Bool
+
+asValue can now assign a value to a variable, EVar (Ident "s").
+Start off with an empty map, so: let x =  asValue Map.empty (Ident "s") Bool.
+If you want add more then use x for the map, but another "let" variable:
+let m = asValue x (Ident "r") Bool.
+
+After you've inserted values for your variables with asValue, try constructing
+a simple expression existing of basic proporsitional logic (AND, OR, IMPLIES, NOT).
+
