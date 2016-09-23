@@ -26,39 +26,52 @@ showExpr (ENot  a)   = case a of
   _              -> "!(" ++ showExpr a ++ ")"
 
 
-sEval :: Map.Map Ident Bool -> Expr -> Bool
-sEval m ELitTrue            = True
-sEval m ELitFalse           = False
+sEval :: Map.Map Ident Bool -> Expr -> IO Bool
+sEval m ELitTrue            = return True
+sEval m ELitFalse           = return False
 sEval m (EVar (Ident s))    = case Map.lookup (Ident s) m of
-  Just a -> a
+  Just a -> return a
   Nothing -> error $ "value doesn't exist for " ++ s
-sEval m (EAnd a b)  = and [sEval m a, sEval m b]
-sEval m (EOr  a b)  = or  [sEval m a, sEval m b]
-sEval m (EImp a b)  = case sEval m a of
-  True  -> case sEval m b of
-    False -> False
-    _     -> True
-  False -> True
-sEval m (ENot a)    = not (sEval m a)
+sEval m (EAnd a b)  = do
+  x <- sEval m a
+  y <- sEval m b
+  return $ and [x,y]
+sEval m (EOr  a b)  = do
+  x <- sEval m a
+  y <- sEval m b
+  return $ or [x,y]
+sEval m (EImp a b)  = do
+  x <- sEval m a
+  case x of
+    True  -> do
+      y <- sEval m b
+      case y of 
+        False -> return False
+        _     -> return True
+    False -> return True
+sEval m (ENot a)    = do
+  x <- sEval m a
+  return $ not x
 
--- Assign Value
-asValue :: Map.Map Ident Bool -> Expr -> Bool -> Map.Map Ident Bool
-asValue m (EVar i) b  = Map.insert i b m
+evalStmts :: Map.Map Ident Bool -> [Stmt] -> IO (Map.Map Ident Bool)
+evalStmts m []     = return m
+evalStmts m (x:xs) = do
+  a <- evalStmt m x
+  evalStmts a xs
 
+evalStmt :: Map.Map Ident Bool -> Stmt -> IO (Map.Map Ident Bool)
+evalStmt m (SAssign (Ident s) e) = case Map.lookup (Ident s) m of
+  Just _ -> error $ "Value exists for " ++ s
+  Nothing -> do
+             x <- sEval m e
+             return $ Map.insert (Ident s) x m
+evalStmt m (SExpr e) = do
+  x <- sEval m e
+  putStrLn $ concat ["User input: ", showExpr e]
+  putStrLn $ show x
+  return m
 
--- Not sure we need this anymore
-
-{-
-evalStmt :: Map.Map Ident Bool -> Stmt -> Map.Map Ident Bool
-evalStmt m (SAssign i e) = case Map.lookup i m of
-  Just _ -> error "Value exists for " ++ getter i
-  Nothing -> Map.insert i (eval e) m
-
-getter :: Ident -> String
-getter (Ident s) = s
-
-eval :: Map.Map Ident Bool -> Expr -> Bool
-eval _ ELitTrue = True
-eval _ ELitFalse = False
-eval m (EVar (Ident s)) = undefined
--}
+evalProg :: Program -> IO ()
+evalProg (Program prog) = do
+  evalStmts Map.empty prog
+  return ()

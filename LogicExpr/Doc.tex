@@ -45,7 +45,7 @@ The symbols used in LogicExpr are the following: \\
 \begin{tabular}{lll}
 {\symb{{$-$}{$>$}}} &{\symb{\&}} &{\symb{{$|$}}} \\
 {\symb{!}} &{\symb{(}} &{\symb{)}} \\
-{\symb{{$=$}}} & & \\
+{\symb{{$=$}}} &{\symb{;}} & \\
 \end{tabular}\\
 
 \subsection*{Comments}
@@ -56,6 +56,10 @@ Non-terminals are enclosed between $\langle$ and $\rangle$.
 The symbols  {\arrow}  (production),  {\delimit}  (union) 
 and {\emptyP} (empty rule) belong to the BNF notation. 
 All other symbols are terminals.\\
+
+\begin{tabular}{lll}
+{\nonterminal{Program}} & {\arrow}  &{\nonterminal{ListStmt}}  \\
+\end{tabular}\\
 
 \begin{tabular}{lll}
 {\nonterminal{Expr}} & {\arrow}  &{\nonterminal{Expr}} {\terminal{{$-$}{$>$}}} {\nonterminal{Expr}}  \\
@@ -83,6 +87,12 @@ All other symbols are terminals.\\
 \begin{tabular}{lll}
 {\nonterminal{Stmt}} & {\arrow}  &{\nonterminal{Expr}}  \\
  & {\delimit}  &{\nonterminal{Ident}} {\terminal{{$=$}}} {\nonterminal{Expr}}  \\
+\end{tabular}\\
+
+\begin{tabular}{lll}
+{\nonterminal{ListStmt}} & {\arrow}  &{\emptyP} \\
+ & {\delimit}  &{\nonterminal{Stmt}}  \\
+ & {\delimit}  &{\nonterminal{Stmt}} {\terminal{;}} {\nonterminal{ListStmt}}  \\
 \end{tabular}\\
 
 

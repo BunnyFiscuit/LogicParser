@@ -27,7 +27,7 @@ The reserved words used in LogicExpr are the following:
 
 The symbols used in LogicExpr are the following:
   | -> | & | | | !
-  | ( | ) | = | 
+  | ( | ) | = | ;
 
 ===Comments===
 There are no single-line comments in the grammar.There are no multiple-line comments in the grammar.
@@ -38,6 +38,7 @@ The symbols -> (production),  **|**  (union)
 and **eps** (empty rule) belong to the BNF notation. 
 All other symbols are terminals.
 
+  | //Program// | -> | //[Stmt]// 
   | //Expr// | -> | //Expr// ``->`` //Expr// 
   |  |  **|**  | //Expr1// 
   | //Expr1// | -> | //Expr// ``&`` //Expr// 
@@ -51,5 +52,8 @@ All other symbols are terminals.
   |  |  **|**  | ``(`` //Expr// ``)`` 
   | //Stmt// | -> | //Expr// 
   |  |  **|**  | //Ident// ``=`` //Expr// 
+  | //[Stmt]// | -> | **eps**
+  |  |  **|**  | //Stmt// 
+  |  |  **|**  | //Stmt// ``;`` //[Stmt]// 
 
 

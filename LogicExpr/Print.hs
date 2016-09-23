@@ -83,6 +83,11 @@ instance Print Ident where
 
 
 
+instance Print Program where
+  prt i e = case e of
+   Program stmts -> prPrec i 0 (concatD [prt 0 stmts])
+
+
 instance Print Expr where
   prt i e = case e of
    EImp expr0 expr -> prPrec i 0 (concatD [prt 0 expr0 , doc (showString "->") , prt 0 expr])
@@ -99,5 +104,9 @@ instance Print Stmt where
    SExpr expr -> prPrec i 0 (concatD [prt 0 expr])
    SAssign id expr -> prPrec i 0 (concatD [prt 0 id , doc (showString "=") , prt 0 expr])
 
+  prtList es = case es of
+   [] -> (concatD [])
+   [x] -> (concatD [prt 0 x])
+   x:xs -> (concatD [prt 0 x , doc (showString ";") , prt 0 xs])
 
 

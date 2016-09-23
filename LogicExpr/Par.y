@@ -8,11 +8,7 @@ import LogicExpr.ErrM
 
 }
 
-%name pExpr Expr
-%name pExpr1 Expr1
-%name pExpr2 Expr2
-%name pExpr3 Expr3
-%name pStmt Stmt
+%name pProgram Program
 
 -- no lexer declaration
 %monad { Err } { thenM } { returnM }
@@ -24,10 +20,11 @@ import LogicExpr.ErrM
  '(' { PT _ (TS _ 3) }
  ')' { PT _ (TS _ 4) }
  '->' { PT _ (TS _ 5) }
- '=' { PT _ (TS _ 6) }
- 'false' { PT _ (TS _ 7) }
- 'true' { PT _ (TS _ 8) }
- '|' { PT _ (TS _ 9) }
+ ';' { PT _ (TS _ 6) }
+ '=' { PT _ (TS _ 7) }
+ 'false' { PT _ (TS _ 8) }
+ 'true' { PT _ (TS _ 9) }
+ '|' { PT _ (TS _ 10) }
 
 L_ident  { PT _ (TV $$) }
 L_err    { _ }
@@ -36,6 +33,10 @@ L_err    { _ }
 %%
 
 Ident   :: { Ident }   : L_ident  { Ident $1 }
+
+Program :: { Program }
+Program : ListStmt { Program $1 } 
+
 
 Expr :: { Expr }
 Expr : Expr '->' Expr { EImp $1 $3 } 
@@ -63,6 +64,12 @@ Expr3 : 'true' { ELitTrue }
 Stmt :: { Stmt }
 Stmt : Expr { SExpr $1 } 
   | Ident '=' Expr { SAssign $1 $3 }
+
+
+ListStmt :: { [Stmt] }
+ListStmt : {- empty -} { [] } 
+  | Stmt { (:[]) $1 }
+  | Stmt ';' ListStmt { (:) $1 $3 }
 
 
 

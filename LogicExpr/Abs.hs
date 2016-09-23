@@ -4,6 +4,10 @@ module LogicExpr.Abs where
 
 
 newtype Ident = Ident String deriving (Eq,Ord,Show)
+data Program =
+   Program [Stmt]
+  deriving (Eq,Ord,Show)
+
 data Expr =
    EImp Expr Expr
  | EAnd Expr Expr

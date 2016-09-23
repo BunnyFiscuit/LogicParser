@@ -14,6 +14,11 @@ transIdent x = case x of
   Ident str  -> failure x
 
 
+transProgram :: Program -> Result
+transProgram x = case x of
+  Program stmts  -> failure x
+
+
 transExpr :: Expr -> Result
 transExpr x = case x of
   EImp expr1 expr2  -> failure x
