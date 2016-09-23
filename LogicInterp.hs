@@ -65,6 +65,8 @@ evalStmt m (SAssign (Ident s) e) = case Map.lookup (Ident s) m of
   Nothing -> do
              x <- sEval m e
              return $ Map.insert (Ident s) x m
+
+-- heh
 evalStmt m (SExpr e) = do
   x <- sEval m e
   putStrLn $ concat ["User input: ", showExpr e]
