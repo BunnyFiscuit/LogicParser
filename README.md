@@ -6,4 +6,4 @@ You need have installed GHCi
 
 # Instructions
 - Make a text file with some statements, e.g. p = true ; !p
-- Type "ghc Main.hs", then "./Main <textfile>" in your terminal
+- Type "ghc Main.hs", then "./Main textfile.txt" in your terminal
